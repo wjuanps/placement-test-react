@@ -11,6 +11,10 @@ import Routes from './routes';
 export default () => 
   <Provider store={store}>
     <Header />
-    <Routes />
+
+    <div className="w-75 mx-auto mt-5 mb-4">
+      <Routes />
+    </div>
+    
     <Footer />
   </Provider>

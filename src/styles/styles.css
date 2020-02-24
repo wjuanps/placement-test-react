@@ -122,8 +122,8 @@ code {
 
 .progress-dot {
   display: inline-block;
-  width: 0.6em;
-  height: 0.6em;
+  width: 0.9em;
+  height: 0.9em;
   border-radius: 50%;
   margin: 0 0.2em;
   cursor: pointer;

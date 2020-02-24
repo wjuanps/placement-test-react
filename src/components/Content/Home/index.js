@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Home = ({ placement }) => {
   return (
-    <div className="w-75 mx-auto mt-5">
+    <>
       <h2>PLACEMENT TEST</h2>
 
       <hr className="hr" />
@@ -48,11 +48,11 @@ const Home = ({ placement }) => {
                         {
                           (placement.result != null && placement.result !== undefined)
                             ? <ViewResultTestButton 
-                              style={{ borderRadius: 0 }} 
-                              className="btn btn-success col-md-6" />
+                                style={{ borderRadius: 0 }} 
+                                className="btn btn-success col-md-6" />
                             : <ContinueTestButton 
-                              style={{ borderRadius: 0 }} 
-                              className="btn btn-success col-md-6" />
+                                style={{ borderRadius: 0 }} 
+                                className="btn btn-success col-md-6" />
                         }
                       </>
                     :
@@ -65,7 +65,7 @@ const Home = ({ placement }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -79,4 +79,4 @@ export const ViewResultTestButton = (props) =>
     {...props}>CONTINUAR TESTE
   </button>;
 
-export default connect(placement => ({ placement }))(Home);
+export default connect(state => ({ placement: state.placement }))(Home);

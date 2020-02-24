@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Result = () => (
-  <div className="w-75 mx-auto mt-5">
+  <>
     <h2>PLACEMENT TEST - BASIC</h2>
 
     <hr className="hr" />
@@ -74,7 +74,7 @@ const Result = () => (
         </button>
       </div>
     </div>
-  </div>
+  </>
 );
 
 export default Result;
