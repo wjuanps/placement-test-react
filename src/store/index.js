@@ -16,23 +16,25 @@ function saveLocalStorage(state) {
 }
 
 function reducer (state = INITIAL_STATE, action) {
-  if (action.type === "TOGGLE_QUESTION") {
-    
-    state = {
-      placement: state.placement, questionActive: action.index
-    }
-  }
-
-  if (action.type === "SAVE_ANSWER") {
-    let question = state.placement.questions[action.index];
-    question.respondida = 1;
-    question.resposta   = action.resposta;
-
-    state.placement.questions[action.index] = question;
-
-    state = {
-      placement: state.placement, questionActive: action.index
-    }
+  switch (action.type) {
+    case "TOGGLE_QUESTION":
+      state = {
+        placement: state.placement, questionActive: action.index
+      }
+      break;
+    case "SAVE_ANSWER":
+      let question = state.placement.questions[action.index];
+      question.respondida = 1;
+      question.resposta   = action.resposta;
+  
+      state.placement.questions[action.index] = question;
+  
+      state = {
+        placement: state.placement, questionActive: action.index
+      }
+    break;
+    default:
+      break;
   }
 
   saveLocalStorage(state);
