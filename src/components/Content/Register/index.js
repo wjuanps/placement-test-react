@@ -1,26 +1,52 @@
 import React, { useState } from "react";
+import { Form } from "@unform/web";
 import { Link } from "react-router-dom";
 
 import getPlaces from "../../../services/geoNames";
 
-const Register = () => {
+import { Input, Select } from "../../Form";
+
+import { model } from '../../../models/placement';
+
+import axios from 'axios';
+
+const Register = ({ history }) => {
+  const initialData = [{ value: "", text: "Escolha ..." }];
   const countries = [
     { value: "brazil_3469034", text: "Brasil" },
     { value: "usa_6252001", text: "Estados Unidos" },
     { value: "japan_1861060", text: "Japão" }
   ];
 
-  const [states, setStates] = useState([{ value: "", text: "Escolha ..." }]);
-  const [cities, setCitites] = useState([{ value: "", text: "Escolha ..." }]);
+  const [states, setStates] = useState(initialData);
+  const [cities, setCitites] = useState(initialData);
+
+  async function handleSubmit(data, { reset }) {
+    try {
+      const params = new URLSearchParams();
+      params.append('data', JSON.stringify(data));
+  
+      let response = await axios.post(`http://localhost:8000/api/nivelamento/avaliacao/create`, params);
+      
+      const { avaliacao_key } = response.data;
+  
+      localStorage.setItem('placement', avaliacao_key);
+  
+      reset();
+  
+      history.push("/test-your-english");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
       <h2>PLACEMENT TEST - BASIC</h2>
       <hr className="hr mb-5" />
 
-      <form
-        id="form"
-        action="/store"
+      <Form
+        onSubmit={handleSubmit}
         method="post"
         className="p-5"
         style={{ boxShadow: "0 0 10px rgba(0, 0, 0, .08)" }}
@@ -28,11 +54,11 @@ const Register = () => {
         <div className="form-row mb-3">
           <div className="form-group col-md-4">
             <label htmlFor="name">Nome</label>
-            <input
+            <Input
+              id="name"
+              name="name"
               type="text"
               className="form-control"
-              name="name"
-              id="name"
               placeholder="Nome"
               required="required"
             />
@@ -40,7 +66,7 @@ const Register = () => {
 
           <div className="form-group col-md-4">
             <label htmlFor="email">Email</label>
-            <input
+            <Input
               type="email"
               className="form-control"
               name="email"
@@ -52,7 +78,7 @@ const Register = () => {
 
           <div className="form-group col-md-4">
             <label htmlFor="phone">Telefone</label>
-            <input
+            <Input
               type="phone"
               className="form-control"
               name="phone"
@@ -66,7 +92,7 @@ const Register = () => {
         <div className="form-row mb-3">
           <div className="form-group col-md-4">
             <label htmlFor="country">País</label>
-            <select
+            <Select
               onChange={event => getPlaces(event.currentTarget, setStates)}
               id="country"
               name="country"
@@ -81,12 +107,12 @@ const Register = () => {
                   {country.text}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
 
           <div className="form-group col-md-4">
             <label htmlFor="state">Estado</label>
-            <select
+            <Select
               onChange={event => getPlaces(event.currentTarget, setCitites)}
               id="state"
               name="state"
@@ -99,12 +125,12 @@ const Register = () => {
                   {state.text}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
 
           <div className="form-group col-md-4">
             <label htmlFor="city">Cidade</label>
-            <select
+            <Select
               id="city"
               name="city"
               className="form-control"
@@ -116,7 +142,7 @@ const Register = () => {
                   {city.text}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         </div>
 
@@ -131,7 +157,7 @@ const Register = () => {
         <button type="submit" id="buttonInitTest" className="btn btn-primary">
           INICIAR TESTE
         </button>
-      </form>
+      </Form>
     </>
   );
 };
