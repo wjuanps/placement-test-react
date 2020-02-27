@@ -6,9 +6,9 @@ import getPlaces from "../../../services/geoNames";
 
 import { Input, Select } from "../../Form";
 
-import { model } from '../../../models/placement';
+import { model } from "../../../models/placement";
 
-import axios from 'axios';
+import axios from "axios";
 
 const Register = ({ history }) => {
   const initialData = [{ value: "", text: "Escolha ..." }];
@@ -24,16 +24,19 @@ const Register = ({ history }) => {
   async function handleSubmit(data, { reset }) {
     try {
       const params = new URLSearchParams();
-      params.append('data', JSON.stringify(data));
-  
-      let response = await axios.post(`http://localhost:8000/api/nivelamento/avaliacao/create`, params);
-      
+      params.append("data", JSON.stringify(data));
+
+      let response = await axios.post(
+        `http://localhost:8000/api/nivelamento/avaliacao/create`,
+        params
+      );
+
       const { avaliacao_key } = response.data;
-  
-      localStorage.setItem('placement', avaliacao_key);
-  
+
+      localStorage.setItem("placement", avaliacao_key);
+
       reset();
-  
+
       history.push("/test-your-english");
     } catch (error) {
       console.error(error);
