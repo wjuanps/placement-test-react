@@ -6,7 +6,7 @@ const baseUrl = "http://localhost:8000/api/";
 
 export default {
     placement: {
-        signup: async (params) => 
+        create: async (params) => 
             await api.post(`nivelamento/avaliacao/create`, params)
     }
 }
