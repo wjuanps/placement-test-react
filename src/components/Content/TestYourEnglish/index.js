@@ -5,12 +5,7 @@ import { connect } from "react-redux";
 import QuestionsView from "./QuestionView";
 import Indicator from "./Indicator";
 
-function toggleQuestion(index) {
-  return {
-    type: "TOGGLE_QUESTION",
-    index
-  };
-}
+import { toggleQuestion } from '../../../actions';
 
 const Test = ({ state, dispatch }) => {
   const [loading, setLoading] = useState(false);

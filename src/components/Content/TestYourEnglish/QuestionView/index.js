@@ -3,11 +3,7 @@ import { connect } from 'react-redux';
 
 import Question from '../Question';
 
-function saveAnswer(index, resposta) {
-  return {
-    type: "SAVE_ANSWER", index, resposta
-  }
-}
+import { saveAnswer } from '../../../../actions';
 
 const QuestionView = ({ state, dispatch }) => {
   return (
@@ -16,20 +12,20 @@ const QuestionView = ({ state, dispatch }) => {
         state.placement.questions?.map((question, i) => {
           return (
             <div
-              key={question.id} 
+              key={question.id}
               className={`
                 col-md-12
-                caroucel 
+                caroucel
                 ${ (i !== state.questionActive) ? 'hidden' : '' }
               `}>
 
               <h3 className="mb-4">{question.enunciado}</h3>
 
               {question.alternativas.map(
-                alternative => 
-                  <Question 
-                    key={alternative.id} 
-                    alternative={alternative} 
+                alternative =>
+                  <Question
+                    key={alternative.id}
+                    alternative={alternative}
                     question={question}
                     onClick={() => dispatch(saveAnswer(i, alternative.alternativa))} />
                 )}
