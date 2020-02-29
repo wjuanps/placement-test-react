@@ -67,9 +67,9 @@ const Test = ({ state, dispatch }) => {
                   id="previous"
                   type="button"
                   onClick={() =>
-                    dispatch(toggleQuestion(state.questionActive - 1))
+                    dispatch(toggleQuestion(state?.questionActive - 1))
                   }
-                  disabled={state.questionActive === 0}
+                  disabled={state?.questionActive === 0}
                   className="btn btn-primary"
                 >
                   <i className="fa fa-chevron-left" aria-hidden="true"></i>
@@ -78,11 +78,11 @@ const Test = ({ state, dispatch }) => {
                   id="next"
                   type="button"
                   onClick={() =>
-                    dispatch(toggleQuestion(state.questionActive + 1))
+                    dispatch(toggleQuestion(state?.questionActive + 1))
                   }
                   disabled={
-                    state.questionActive ===
-                    state.placement.questions?.length - 1
+                    state?.questionActive ===
+                    state?.placement.questions?.length - 1
                   }
                   className="btn btn-primary"
                 >
@@ -95,14 +95,14 @@ const Test = ({ state, dispatch }) => {
 
         <div className="row text-center mb-5" id="indicator">
           <ul className="dots-container col-md-12" role="navigation">
-            {state.placement.questions?.map((question, i) => {
+            {state?.placement?.questions?.map((question, i) => {
               return (
                 <Indicator
                   index={i}
                   key={question.id}
                   question={question}
                   questionActive={state.questionActive}
-                  length={state.placement.questions.length}
+                  length={state?.placement?.questions?.length}
                   onClick={() => dispatch(toggleQuestion(i))}
                 />
               );
@@ -114,4 +114,4 @@ const Test = ({ state, dispatch }) => {
   );
 };
 
-export default connect(state => ({ state }))(Test);
+export default connect(state => ({ state: state.placementReducer }))(Test);

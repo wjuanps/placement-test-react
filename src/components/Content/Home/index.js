@@ -125,4 +125,4 @@ export const ViewResultTestButton = props => (
   </button>
 );
 
-export default connect(state => ({ placement: state.placement }))(Home);
+export default connect(state => ({ placement: state.placementReducer.placement }))(Home);

@@ -9,14 +9,14 @@ const QuestionView = ({ state, dispatch }) => {
   return (
     <div className="row" id="questoes">
       {
-        state.placement.questions?.map((question, i) => {
+        state?.placement?.questions?.map((question, i) => {
           return (
             <div
               key={question.id}
               className={`
                 col-md-12
                 caroucel
-                ${ (i !== state.questionActive) ? 'hidden' : '' }
+                ${ (i !== state?.questionActive) ? 'hidden' : '' }
               `}>
 
               <h3 className="mb-4">{question.enunciado}</h3>
@@ -37,4 +37,4 @@ const QuestionView = ({ state, dispatch }) => {
   );
 }
 
-export default connect(state => ({ state }))(QuestionView);
+export default connect(state => ({ state: state?.placementReducer }))(QuestionView);
