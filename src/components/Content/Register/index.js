@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Form } from "@unform/web";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import getPlaces from "../../../services/geoNames";
 
 import { Input, Select } from "../../Form";
 
 import model from "../../../models/placement";
+import { initPlacementTest } from "../../../actions";
 
-const Register = ({ history }) => {
+const Register = ({ state, dispatch, history }) => {
   const initialData = [{ value: "", text: "Escolha ..." }];
   const countries = [
     { value: "brazil_3469034", text: "Brasil" },
@@ -19,7 +21,7 @@ const Register = ({ history }) => {
   const [states, setStates] = useState(initialData);
   const [cities, setCitites] = useState(initialData);
 
-  async function handleSubmit(data, { reset }) {
+  async function handleSubmit(data) {
     try {
       data.pais = data.pais.split(/_/)[0];
       data.estado = data.estado.split(/_/)[0];
@@ -32,10 +34,8 @@ const Register = ({ history }) => {
       const { avaliacao, questoes } = response.data;
 
       if (!!avaliacao && questoes) {
-        localStorage.setItem("placement", avaliacao);
-        localStorage.setItem("questions", JSON.stringify(questoes));
+        dispatch(initPlacementTest(avaliacao, questoes));
 
-        reset();
         history.push("/test-your-english");
       }
     } catch (error) {
@@ -165,4 +165,4 @@ const Register = ({ history }) => {
   );
 };
 
-export default Register;
+export default connect(state => ({ state }))(Register);

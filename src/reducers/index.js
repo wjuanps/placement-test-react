@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { toggleQuestionReducer } from './toggleQuestionReducer';
+import { placementReducer } from './placement';
 
 export const Reducers = combineReducers({
-  placementReducer: toggleQuestionReducer,
+  placementReducer,
 });

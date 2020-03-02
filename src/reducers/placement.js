@@ -13,8 +13,21 @@ function saveLocalStorage(state) {
   localStorage.setItem('questions', JSON.stringify(state.placement.questions));
 }
 
-export const toggleQuestionReducer = (state = INITIAL_STATE, action) => {
+export const placementReducer = (state = INITIAL_STATE, action = {}) => {
   switch (action.type) {
+    case "INIT_PLACEMENT_TEST":
+      localStorage.setItem("placement", action.avaliacao);
+      localStorage.setItem("questions", JSON.stringify(action.questoes));
+
+      state = {
+        ...state,
+        placement: {
+          id: localStorage.getItem('placement'),
+          questions: JSON.parse(localStorage.getItem('questions')),
+        }
+      }
+
+      break;
     case "TOGGLE_QUESTION":
       state = {
         placement: state.placement, questionActive: action.index
