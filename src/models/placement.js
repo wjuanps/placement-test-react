@@ -1,10 +1,9 @@
-import axios from 'axios';
-
-const baseUrl = "http://localhost:8000/api/";
+/* eslint-disable no-return-await */
+/* eslint-disable linebreak-style */
+import api from '../services/api';
 
 export default {
-    placement: {
-        create: async (params) => 
-            await axios.post(`${ baseUrl }nivelamento/avaliacao/create`, params)
-    }
-}
+  placement: {
+    create: async (params) => await api.post('nivelamento/avaliacao/init', params),
+  },
+};

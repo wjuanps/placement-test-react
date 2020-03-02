@@ -8,8 +8,6 @@ import { Input, Select } from "../../Form";
 
 import model from "../../../models/placement";
 
-import axios from "axios";
-
 const Register = ({ history }) => {
   const initialData = [{ value: "", text: "Escolha ..." }];
   const countries = [
@@ -23,23 +21,23 @@ const Register = ({ history }) => {
 
   async function handleSubmit(data, { reset }) {
     try {
+      data.pais = data.pais.split(/_/)[0];
+      data.estado = data.estado.split(/_/)[0];
+      data.cidade = data.cidade.split(/_/)[0];
+
       const params = new URLSearchParams();
       params.append("data", JSON.stringify(data));
 
-      let response = await model.placement.create(params);
+      const response = await model.placement.create(params);
+      const { avaliacao, questoes } = response.data;
 
-      // let response = await axios.post(
-      //   `http://localhost:8000/api/nivelamento/avaliacao/create`,
-      //   params
-      // );
+      if (!!avaliacao && questoes) {
+        localStorage.setItem("placement", avaliacao);
+        localStorage.setItem("questions", JSON.stringify(questoes));
 
-      const { avaliacao_key } = response.data;
-
-      localStorage.setItem("placement", avaliacao_key);
-
-      reset();
-
-      history.push("/test-your-english");
+        reset();
+        history.push("/test-your-english");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -61,7 +59,7 @@ const Register = ({ history }) => {
             <label htmlFor="name">Nome</label>
             <Input
               id="name"
-              name="name"
+              name="nome"
               type="text"
               className="form-control"
               placeholder="Nome"
@@ -86,7 +84,7 @@ const Register = ({ history }) => {
             <Input
               type="phone"
               className="form-control"
-              name="phone"
+              name="whatsapp"
               id="phone"
               placeholder="Telefone"
               required="required"
@@ -100,10 +98,10 @@ const Register = ({ history }) => {
             <Select
               onChange={event => getPlaces(event.currentTarget, setStates)}
               id="country"
-              name="country"
+              name="pais"
               className="form-control"
               required="required"
-              defaultValue={""}
+              defaultValue=""
             >
               <option value="">Escolha...</option>
 
@@ -120,10 +118,10 @@ const Register = ({ history }) => {
             <Select
               onChange={event => getPlaces(event.currentTarget, setCitites)}
               id="state"
-              name="state"
+              name="estado"
               className="form-control"
               required="required"
-              defaultValue={""}
+              defaultValue=""
             >
               {states.map(state => (
                 <option key={state.value} value={state.value}>
@@ -137,10 +135,10 @@ const Register = ({ history }) => {
             <label htmlFor="city">Cidade</label>
             <Select
               id="city"
-              name="city"
+              name="cidade"
               className="form-control"
               required="required"
-              defaultValue={""}
+              defaultValue=""
             >
               {cities.map(city => (
                 <option key={city.value} value={city.value}>

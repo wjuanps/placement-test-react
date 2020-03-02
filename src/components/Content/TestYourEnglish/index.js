@@ -11,12 +11,14 @@ const Test = ({ state, dispatch }) => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  if (
-    state.placement.questions == null ||
-    state.placement.questions === undefined
-  ) {
-    return <Redirect to="/register" />;
-  }
+  console.log(state);
+
+  // if (
+  //   state.placement.questions == null ||
+  //   state.placement.questions === undefined
+  // ) {
+  //   return <Redirect to="/register" />;
+  // }
 
   return (
     <>
