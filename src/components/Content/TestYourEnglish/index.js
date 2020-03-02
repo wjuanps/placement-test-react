@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import QuestionsView from "./QuestionView";
 import Indicator from "./Indicator";
 
-import { toggleQuestion } from '../../../actions';
+import { toggleQuestion } from '../../../actions/question';
 
 const Test = ({ state, dispatch }) => {
   const [loading, setLoading] = useState(false);
@@ -67,7 +67,7 @@ const Test = ({ state, dispatch }) => {
                   id="previous"
                   type="button"
                   onClick={() =>
-                    dispatch(toggleQuestion(state?.questionActive - 1))
+                    toggleQuestion(state?.questionActive - 1)(dispatch)
                   }
                   disabled={state?.questionActive === 0}
                   className="btn btn-primary"
@@ -78,7 +78,7 @@ const Test = ({ state, dispatch }) => {
                   id="next"
                   type="button"
                   onClick={() =>
-                    dispatch(toggleQuestion(state?.questionActive + 1))
+                    toggleQuestion(state?.questionActive + 1)(dispatch)
                   }
                   disabled={
                     state?.questionActive ===
@@ -103,7 +103,7 @@ const Test = ({ state, dispatch }) => {
                   question={question}
                   questionActive={state.questionActive}
                   length={state?.placement?.questions?.length}
-                  onClick={() => dispatch(toggleQuestion(i))}
+                  onClick={() => toggleQuestion(i)(dispatch)}
                 />
               );
             })}

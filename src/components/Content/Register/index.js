@@ -8,7 +8,7 @@ import getPlaces from "../../../services/geoNames";
 import { Input, Select } from "../../Form";
 
 import model from "../../../models/placement";
-import { initPlacementTest } from "../../../actions";
+import { initPlacementTest } from "../../../actions/init";
 
 const Register = ({ state, dispatch, history }) => {
   const initialData = [{ value: "", text: "Escolha ..." }];
@@ -34,9 +34,10 @@ const Register = ({ state, dispatch, history }) => {
       const { avaliacao, questoes } = response.data;
 
       if (!!avaliacao && questoes) {
-        dispatch(initPlacementTest(avaliacao, questoes));
+        initPlacementTest(avaliacao, questoes)(dispatch);
 
         history.push("/test-your-english");
+        window.open("/test-your-english", "_self");
       }
     } catch (error) {
       console.error(error);

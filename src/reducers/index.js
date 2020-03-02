@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 
-import { placementReducer } from './placement';
+import { placementReducer } from './question';
+import { initPlacement } from './init';
 
-export const Reducers = combineReducers({
+const Reducers = combineReducers({
   placementReducer,
+  initPlacement
 });
+
+export default Reducers;

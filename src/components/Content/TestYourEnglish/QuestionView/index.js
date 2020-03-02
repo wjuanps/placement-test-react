@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Question from '../Question';
 
-import { saveAnswer } from '../../../../actions';
+import { saveAnswer } from '../../../../actions/question';
 
 const QuestionView = ({ state, dispatch }) => {
   return (
@@ -27,7 +27,7 @@ const QuestionView = ({ state, dispatch }) => {
                     key={alternative.id}
                     alternative={alternative}
                     question={question}
-                    onClick={() => dispatch(saveAnswer(i, alternative.alternativa))} />
+                    onClick={() => saveAnswer(i, alternative.alternativa)(dispatch)} />
                 )}
             </div>
           );
