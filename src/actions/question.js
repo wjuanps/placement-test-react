@@ -5,17 +5,24 @@ const questionToggled = index => {
     type: TOGGLE_QUESTION,
     index
   };
-}
+};
 
-const answerSaved = (index, resposta) => {
+const answerSaved = (index, resposta, questionId, respostaId) => {
   return {
     type: SAVE_ANSWER,
-    index, resposta
-  }
-}
+    index,
+    resposta,
+    questionId,
+    respostaId
+  };
+};
 
-export const saveAnswer = (index, resposta) => 
-  dispatch => dispatch(answerSaved(index, resposta));
+export const saveAnswer = (
+  index,
+  resposta,
+  questionId,
+  respostaId
+) => dispatch => dispatch(answerSaved(index, resposta, questionId, respostaId));
 
-export const toggleQuestion = index => 
-  dispatch => dispatch(questionToggled(index));
+export const toggleQuestion = index => dispatch =>
+  dispatch(questionToggled(index));
