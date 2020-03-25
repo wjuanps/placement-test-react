@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = `${document.location.origin}/api/`;
+const baseURL = `https://ur.really.education/api/`;
 
 const api = axios.create({
   baseURL

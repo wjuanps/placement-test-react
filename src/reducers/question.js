@@ -30,7 +30,6 @@ export const placementReducer = (state = INITIAL_STATE, action = {}) => {
       };
       break;
     case UPDATE_STATE:
-      console.log(state);
       state = {
         ...state,
         saving: action.status,
