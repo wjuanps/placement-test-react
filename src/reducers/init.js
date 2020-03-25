@@ -2,7 +2,7 @@ import { INIT_PLACEMENT_TEST } from "../types";
 
 export const INITIAL_STATE = {
   questionActive: localStorage.getItem("questionActive") | 0,
-  finished: localStorage.getItem("finished") | false,
+  finished: !!parseInt(localStorage.getItem("finished")),
   placement: {
     id: localStorage.getItem("placement"),
     questions: JSON.parse(localStorage.getItem("questions")),
@@ -17,22 +17,24 @@ export const saveLocalStorage = state => {
   localStorage.setItem("questions", JSON.stringify(state.placement.questions));
 };
 
-export const initPlacement = (state = INITIAL_STATE, action = {}) => {
+export const initPlacement = (state = {}, action = {}) => {
   switch (action.type) {
     case INIT_PLACEMENT_TEST:
       state = {
-        ...state,
+        questionActive: 0,
+        finished: 0,
         placement: {
           id: action.avaliacao,
-          questions: action.questoes
+          questions: action.questoes,
+          result: null
         }
       };
+
+      saveLocalStorage(state);
       break;
     default:
       return state;
   }
-
-  saveLocalStorage(state);
 
   return state;
 };

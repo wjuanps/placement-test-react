@@ -6,6 +6,11 @@ export default {
   placement: {
     create: async params =>
       await api.post("nivelamento/avaliacao/init", params),
-    saveAnswer: params => api.post("nivelamento/avaliacao/saveAnswer", params)
+    saveAnswer: async params =>
+      await api.post("nivelamento/avaliacao/saveAnswer", params),
+    endPlacement: async params =>
+      api.post("nivelamento/avaliacao/end-placement", params),
+    getResult: async placement =>
+      await api.get(`nivelamento/avaliacao/result/${placement}`)
   }
 };

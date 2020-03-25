@@ -21,8 +21,12 @@ const Register = ({ state, dispatch, history }) => {
   const [states, setStates] = useState(initialData);
   const [cities, setCitites] = useState(initialData);
 
+  const [initializing, setInitializing] = useState(false);
+
   async function handleSubmit(data) {
     try {
+      setInitializing(true);
+
       data.pais = data.pais.split(/_/)[0];
       data.estado = data.estado.split(/_/)[0];
       data.cidade = data.cidade.split(/_/)[0];
@@ -158,8 +162,13 @@ const Register = ({ state, dispatch, history }) => {
           </h6>
         </div>
 
-        <button type="submit" id="buttonInitTest" className="btn btn-primary">
-          INICIAR TESTE
+        <button
+          type="submit"
+          id="buttonInitTest"
+          className="btn btn-primary"
+          disabled={initializing}
+        >
+          {initializing ? "INICIALIZANDO ..." : "INICIAR TESTE"}
         </button>
       </Form>
     </>

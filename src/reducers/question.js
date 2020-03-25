@@ -1,13 +1,12 @@
-import { SAVE_ANSWER, TOGGLE_QUESTION } from "../types";
+import { UPDATE_STATE, SAVE_ANSWER, TOGGLE_QUESTION } from "../types";
 
 import { INITIAL_STATE, saveLocalStorage } from "./init";
-
-import model from "../models/placement";
 
 export const placementReducer = (state = INITIAL_STATE, action = {}) => {
   switch (action.type) {
     case TOGGLE_QUESTION:
       state = {
+        ...state,
         placement: state.placement,
         questionActive: action.index
       };
@@ -19,21 +18,21 @@ export const placementReducer = (state = INITIAL_STATE, action = {}) => {
 
       state.placement.questions[action.index] = question;
 
-      const params = new URLSearchParams();
-      params.append("placementKey", state.placement.id);
-      params.append("answer", action.respostaId);
-      params.append("question", action.questionId);
-
-      model.placement.saveAnswer(params);
-
-      let finishid = state.placement.questions.every(
+      let finished = state.placement.questions.every(
         question => question.respondida === 1
       );
 
       state = {
+        ...state,
         placement: state.placement,
         questionActive: action.index,
-        finishid
+        finished
+      };
+      break;
+    case UPDATE_STATE:
+      state = {
+        ...state,
+        saving: action.status
       };
       break;
     default:

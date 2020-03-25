@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 import QuestionsView from "./QuestionView";
 import Indicator from "./Indicator";
 
 import { toggleQuestion } from "../../../actions/question";
+import model from "../../../models/placement";
 
 const Test = ({ state, dispatch }) => {
-  console.log(state);
-  const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const history = useHistory();
+
+  const [finishing, setFinishing] = useState(false);
 
   if (
     state.placement.questions == null ||
@@ -19,23 +20,27 @@ const Test = ({ state, dispatch }) => {
     return <Redirect to="/register" />;
   }
 
+  const endPlacement = async () => {
+    try {
+      setFinishing(true);
+
+      const params = new URLSearchParams();
+      params.append("placement", localStorage.getItem("placement"));
+
+      const response = await model.placement.endPlacement(params);
+      const { id } = response.data;
+
+      history.push(`/result/${id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <h2>PLACEMENT TEST - BASIC</h2>
 
       <hr className="hr" />
-
-      <div className={`row ${!loading ? "hidden" : ""}`} id="loading">
-        <lottie-player
-          className="mx-auto hidden"
-          src="https://assets2.lottiefiles.com/packages/lf20_BH43lc.json"
-          background="transparent"
-          speed="1"
-          style={{ width: "400px", height: "400px" }}
-          loop
-          autoplay
-        ></lottie-player>
-      </div>
 
       <div className="mt-4" id="test">
         <QuestionsView />
@@ -45,12 +50,14 @@ const Test = ({ state, dispatch }) => {
             <button
               id="end"
               className={`btn btn-success ${state.finished ? "" : "hidden"}`}
+              onClick={endPlacement}
+              disabled={finishing}
             >
-              Finalizar
+              {finishing ? "Salvando Teste ..." : "Finalizar"}
             </button>
 
             <div className="float-right">
-              <div className={`float-left ${!saving ? "hidden" : ""}`}>
+              <div className={`float-left ${!state.saving ? "hidden" : ""}`}>
                 <lottie-player
                   id="loadingAnswer"
                   src="https://assets2.lottiefiles.com/packages/lf20_BADN8W/31 - Loading 4.json"

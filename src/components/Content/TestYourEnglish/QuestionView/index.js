@@ -3,9 +3,25 @@ import { connect } from "react-redux";
 
 import Question from "../Question";
 
-import { saveAnswer } from "../../../../actions/question";
+import { saveAnswer, updateState } from "../../../../actions/question";
+import model from "../../../../models/placement";
 
 const QuestionView = ({ state, dispatch }) => {
+  const answer = async (i, alternative, questionId, alternativeId) => {
+    updateState(true)(dispatch);
+
+    const params = new URLSearchParams();
+    params.append("placementKey", state.placement.id);
+    params.append("answer", alternativeId);
+    params.append("question", questionId);
+
+    await model.placement.saveAnswer(params);
+
+    saveAnswer(i, alternative)(dispatch);
+
+    updateState(false)(dispatch);
+  };
+
   return (
     <div className="row" id="questoes">
       {state?.placement?.questions?.map((question, i) => {
@@ -26,12 +42,12 @@ const QuestionView = ({ state, dispatch }) => {
                 alternative={alternative}
                 question={question}
                 onClick={() =>
-                  saveAnswer(
+                  answer(
                     i,
                     alternative.alternativa,
                     question.id,
                     alternative.id
-                  )(dispatch)
+                  )
                 }
               />
             ))}

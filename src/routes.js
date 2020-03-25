@@ -13,7 +13,7 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/result" component={Result} />
+        <Route path="/result/:placement" component={Result} />
         <Route path="/register" component={Register} />
         <Route path="/test-your-english" component={TestYourEnglish} />
         <Route path="*" component={NotFound} />
