@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import QuestionsView from "./QuestionView";
 import Indicator from "./Indicator";
 
-import { toggleQuestion } from '../../../actions/question';
+import { toggleQuestion } from "../../../actions/question";
 
 const Test = ({ state, dispatch }) => {
+  console.log(state);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -41,7 +42,10 @@ const Test = ({ state, dispatch }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <button id="end" className="btn btn-success hidden">
+            <button
+              id="end"
+              className={`btn btn-success ${state.finished ? "" : "hidden"}`}
+            >
               Finalizar
             </button>
 

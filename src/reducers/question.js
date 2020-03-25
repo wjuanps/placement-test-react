@@ -26,9 +26,14 @@ export const placementReducer = (state = INITIAL_STATE, action = {}) => {
 
       model.placement.saveAnswer(params);
 
+      let finishid = state.placement.questions.every(
+        question => question.respondida === 1
+      );
+
       state = {
         placement: state.placement,
-        questionActive: action.index
+        questionActive: action.index,
+        finishid
       };
       break;
     default:
