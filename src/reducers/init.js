@@ -4,7 +4,9 @@ const questions = JSON.parse(localStorage.getItem("questions"));
 
 export const INITIAL_STATE = {
   questionActive: localStorage.getItem("questionActive") | 0,
-  finished: questions.every(question => question.respondida === 1),
+  finished: !!questions
+    ? questions.every(question => question.respondida === 1)
+    : false,
   placement: {
     id: localStorage.getItem("placement"),
     result: JSON.parse(localStorage.getItem("result")),
