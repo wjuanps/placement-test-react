@@ -42,7 +42,7 @@ const Result = ({ state, dispatch }) => {
     }
 
     fetchResult();
-  }, [placement, dispatch, result]);
+  }, []);
 
   return (
     <>
