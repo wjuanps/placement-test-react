@@ -14,7 +14,7 @@ const getPlaces = async (current, callback) => {
     const gid = current.value.split(/_/)[1];
     let response = await api.get(`nivelamento/geonames/${gid}`);
 
-    listPlaces(JSON.parse(response.data), callback);
+    listPlaces(response.data, callback);
   } catch (error) {
     callback([{ value: "", text: "Erro ao carregar os dados" }]);
   }
