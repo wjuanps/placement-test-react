@@ -7,6 +7,7 @@ import { updateState } from "../../../actions/question";
 
 const Result = ({ state, dispatch }) => {
   const [result, setResult] = useState({});
+  const [url, setUrl] = useState("");
 
   const { placement } = useParams();
 
@@ -15,8 +16,9 @@ const Result = ({ state, dispatch }) => {
   useEffect(() => {
     async function fetchResult() {
       const response = await model.placement.getResult(placement);
-      let { percent, total } = response.data;
+      let { percent, total, url } = response.data;
 
+      setUrl(url);
       setResult({ percent, total });
       updateState(false, JSON.stringify(result))(dispatch);
 
@@ -96,9 +98,7 @@ const Result = ({ state, dispatch }) => {
 
         <div className="row w-50 mx-auto mt-5">
           <button
-            onClick={() =>
-              window.open(`https://ur.really.education/matriculas`)
-            }
+            onClick={() => window.open(url)}
             target="_blank"
             className="btn btn-danger btn-block text-uppercase p-2"
             style={{ borderRadius: 0 }}
