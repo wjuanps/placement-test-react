@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -18,6 +18,10 @@ const Test = ({ state, dispatch }) => {
     state.placement.questions === undefined
   ) {
     return <Redirect to="/register" />;
+  }
+
+  if (state.placement.result != null && state.placement.result !== undefined) {
+    return <Redirect to={`/result/${state.placement.id}`} />;
   }
 
   const endPlacement = async () => {

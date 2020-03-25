@@ -15,17 +15,19 @@ const answerSaved = (index, resposta) => {
   };
 };
 
-const stateUpdated = status => {
+const stateUpdated = (status, result) => {
   return {
     type: UPDATE_STATE,
-    status
+    status,
+    result
   };
 };
 
 export const saveAnswer = (index, resposta) => dispatch =>
   dispatch(answerSaved(index, resposta));
 
-export const updateState = status => dispatch => dispatch(stateUpdated(status));
+export const updateState = (status, result = null) => dispatch =>
+  dispatch(stateUpdated(status, result));
 
 export const toggleQuestion = index => dispatch =>
   dispatch(questionToggled(index));

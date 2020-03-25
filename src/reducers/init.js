@@ -1,12 +1,14 @@
 import { INIT_PLACEMENT_TEST } from "../types";
 
+const questions = JSON.parse(localStorage.getItem("questions"));
+
 export const INITIAL_STATE = {
   questionActive: localStorage.getItem("questionActive") | 0,
-  finished: !!parseInt(localStorage.getItem("finished")),
+  finished: questions.every(question => question.respondida === 1),
   placement: {
     id: localStorage.getItem("placement"),
-    questions: JSON.parse(localStorage.getItem("questions")),
-    result: JSON.parse(localStorage.getItem("result"))
+    result: JSON.parse(localStorage.getItem("result")),
+    questions
   }
 };
 
@@ -15,6 +17,7 @@ export const saveLocalStorage = state => {
   localStorage.setItem("questionActive", state.questionActive);
   localStorage.setItem("placement", state.placement.id);
   localStorage.setItem("questions", JSON.stringify(state.placement.questions));
+  localStorage.setItem("result", state.placement.result);
 };
 
 export const initPlacement = (state = {}, action = {}) => {
@@ -22,7 +25,7 @@ export const initPlacement = (state = {}, action = {}) => {
     case INIT_PLACEMENT_TEST:
       state = {
         questionActive: 0,
-        finished: 0,
+        finished: false,
         placement: {
           id: action.avaliacao,
           questions: action.questoes,

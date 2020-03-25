@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
 
 import model from "../../../models/placement";
+import { updateState } from "../../../actions/question";
 
-const Result = () => {
-  const [total, setTotal] = useState(0);
-  const [percent, setPercent] = useState(0);
+const Result = ({ state, dispatch }) => {
+  const [result, setResult] = useState({});
 
   const { placement } = useParams();
 
@@ -16,8 +17,8 @@ const Result = () => {
       const response = await model.placement.getResult(placement);
       let { percent, total } = response.data;
 
-      setTotal(total);
-      setPercent(percent);
+      setResult({ percent, total });
+      updateState(false, JSON.stringify(result))(dispatch);
 
       var myVar = setInterval(myTimer, 1);
 
@@ -67,7 +68,7 @@ const Result = () => {
 
           <div style={{ marginTop: "-10px" }} className="col-md-4">
             <span className="font-weight-bold" style={{ fontSize: "18pt" }}>
-              {total}
+              {result.total}
               <span className="font-weight-light">/</span> 50
             </span>
           </div>
@@ -75,19 +76,19 @@ const Result = () => {
 
         <div className="w-50 row mx-auto mt-4">
           <h5 className="text-info font-weight-bold">
-            {percent <= 30
+            {result.percent <= 30
               ? "Your level is Beginner - Module One / Módulo 1"
               : ""}
-            {percent > 30 && percent <= 48
+            {result.percent > 30 && result.percent <= 48
               ? "Your level is Elementary - Module One / Módulo 1"
               : ""}
-            {percent > 48 && percent <= 84
+            {result.percent > 48 && result.percent <= 84
               ? "Your level is Pre-Intermediate - Module Two / Módulo 2"
               : ""}
-            {percent > 84 && percent <= 98
+            {result.percent > 84 && result.percent <= 98
               ? "Your level is Intermediate - Module Three / Módulo 3"
               : ""}
-            {percent > 98
+            {result.percent > 98
               ? "Your level is Upper-Intermediate - Module Four / Módulo 4"
               : ""}
           </h5>
@@ -130,4 +131,4 @@ const Result = () => {
   );
 };
 
-export default Result;
+export default connect(state => ({ state: state.placementReducer }))(Result);

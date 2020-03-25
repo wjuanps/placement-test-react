@@ -74,6 +74,7 @@ const Home = ({ placement }) => {
                     {placement.result != null &&
                     placement.result !== undefined ? (
                       <ViewResultTestButton
+                        placement={placement.id}
                         style={{ borderRadius: 0 }}
                         className="btn btn-success col-md-6"
                       />
@@ -113,16 +114,13 @@ export const ContinueTestButton = props => (
 
 export const ViewResultTestButton = props => (
   <button
-    onClick={() =>
-      window.open(
-        `/result?placement=${123456}&total=${35}&percent=${75}`,
-        "_self"
-      )
-    }
+    onClick={() => window.open(`/result/${props.placement}`, "_self")}
     {...props}
   >
-    CONTINUAR TESTE
+    VISUALIZAR RESULTADO
   </button>
 );
 
-export default connect(state => ({ placement: state.placementReducer.placement }))(Home);
+export default connect(state => ({
+  placement: state.placementReducer.placement
+}))(Home);
