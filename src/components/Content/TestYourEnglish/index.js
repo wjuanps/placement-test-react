@@ -8,6 +8,7 @@ import Indicator from "./Indicator";
 import { toggleQuestion } from "../../../actions/question";
 
 const Test = ({ state, dispatch }) => {
+  console.log(state);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
